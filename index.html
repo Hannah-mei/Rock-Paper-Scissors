@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Rock, Paper, Scissors</title>
+    </head>
+    <body>
+        <script>
+            let playerScore=0;
+            let compScore=0;
+            let x;
+            function game () {
+                let items=['rock', 'paper', 'scissors'];
+                function compPlay() {
+                    return items[Math.floor(Math.random()*items.length)]
+                }
+                
+                let playerSelection=prompt('Rock, paper or scissors?').toLowerCase();
+                let computerSelection=compPlay();
+                function playRound(playerSelection, computerSelection) {
+                    if (playerSelection=='rock') {
+                        if (computerSelection=='rock') {
+                            x=5;
+                            alert('Draw');
+                        } else if (computerSelection=='paper') {
+                            x=false;
+                            alert('You lost!');
+                        } else if (computerSelection=='scissors') {
+                            x=true;
+                            alert('You won!')
+                        }
+                    } else if (playerSelection=='paper') {
+                        if (computerSelection=='paper') {
+                            x=5;
+                            alert('Draw');
+                        } else if (computerSelection=='rock') {
+                            x=true;
+                            alert('You won!');
+                        } else if (computerSelection=='scissors') {
+                            x=false;
+                            alert('You lost!')
+                        }
+                    } else if (playerSelection=='scissors') {
+                        if (computerSelection=='scissors') {
+                            x=5;
+                            alert('Draw');
+                        } else if (computerSelection=='rock') {
+                            x=false;
+                            alert('You lost!');
+                        } else if (computerSelection=='paper') {
+                            x=true;
+                            alert('You won!');
+                        }
+                    }
+                }
+                playRound(playerSelection, computerSelection);
+            }
+            game ();
+            if (x==true) {
+                playerScore=++playerScore;
+            } else if (x==false) {
+                compScore=++compScore;
+            }
+
+            game ();
+            if (x==true) {
+                playerScore=++playerScore;
+            } else if (x==false) {
+                compScore=++compScore;
+            }
+
+            game ();
+            if (x==true) {
+                playerScore=++playerScore;
+            } else if (x==false) {
+                compScore=++compScore;
+            }
+
+            game ();
+            if (x==true) {
+                playerScore=++playerScore;
+            } else if (x==false) {
+                compScore=++compScore;
+            }
+
+            game ();
+            if (x==true) {
+                playerScore=++playerScore;
+            } else if (x==false) {
+                compScore=++compScore;
+            }
+            
+            if (playerScore>compScore) {
+                alert('Computers suck');
+            } else if (compScore>playerScore) {
+                alert('Humanity sucks');
+            } else if (playerScore==compScore) {
+                alert('Humans are no better than computers')
+            }
+        </script>
+    </body>
+</html>
