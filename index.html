@@ -3,100 +3,111 @@
     <head>
         <meta charset="UTF-8">
         <title>Rock, Paper, Scissors</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div class="container">
+            <div id="moves-left">Moves left: 5</div>
+            <div class="buttons">
+                <button id="rock"><img src="rock.png"></button>
+                <button id="paper"><img src="paper.png"></button>
+                <button id="scissors"><img src="scissors.png"></button>
+            </div>
+            <div id="result">Who's gonna win?</div>
+            <div id="score">0:0</div>            
+            <div id="final"></div>
+            <div id="restart"></div>
+        </div>
         <script>
-            let playerScore=0;
-            let compScore=0;
-            let x;
-            function game () {
-                let items=['rock', 'paper', 'scissors'];
-                function compPlay() {
-                    return items[Math.floor(Math.random()*items.length)]
-                }
-                
-                let playerSelection=prompt('Rock, paper or scissors?').toLowerCase();
-                let computerSelection=compPlay();
-                function playRound(playerSelection, computerSelection) {
-                    if (playerSelection=='rock') {
-                        if (computerSelection=='rock') {
-                            x=5;
-                            alert('Draw');
-                        } else if (computerSelection=='paper') {
-                            x=false;
-                            alert('You lost!');
-                        } else if (computerSelection=='scissors') {
-                            x=true;
-                            alert('You won!')
-                        }
-                    } else if (playerSelection=='paper') {
-                        if (computerSelection=='paper') {
-                            x=5;
-                            alert('Draw');
-                        } else if (computerSelection=='rock') {
-                            x=true;
-                            alert('You won!');
-                        } else if (computerSelection=='scissors') {
-                            x=false;
-                            alert('You lost!')
-                        }
-                    } else if (playerSelection=='scissors') {
-                        if (computerSelection=='scissors') {
-                            x=5;
-                            alert('Draw');
-                        } else if (computerSelection=='rock') {
-                            x=false;
-                            alert('You lost!');
-                        } else if (computerSelection=='paper') {
-                            x=true;
-                            alert('You won!');
-                        }
-                    }
-                }
-                playRound(playerSelection, computerSelection);
-            }
-            game ();
-            if (x==true) {
-                playerScore=++playerScore;
-            } else if (x==false) {
-                compScore=++compScore;
-            }
-
-            game ();
-            if (x==true) {
-                playerScore=++playerScore;
-            } else if (x==false) {
-                compScore=++compScore;
-            }
-
-            game ();
-            if (x==true) {
-                playerScore=++playerScore;
-            } else if (x==false) {
-                compScore=++compScore;
-            }
-
-            game ();
-            if (x==true) {
-                playerScore=++playerScore;
-            } else if (x==false) {
-                compScore=++compScore;
-            }
-
-            game ();
-            if (x==true) {
-                playerScore=++playerScore;
-            } else if (x==false) {
-                compScore=++compScore;
+            function compPlay() {
+                const options=['rock', 'scissors', 'paper'];
+                return options[Math.floor(Math.random()*options.length)];
             }
             
-            if (playerScore>compScore) {
-                alert('Computers suck');
-            } else if (compScore>playerScore) {
-                alert('Humanity sucks');
-            } else if (playerScore==compScore) {
-                alert('Humans are no better than computers')
+            let playerScore=0;
+            let compScore=0; 
+            let moves=5; 
+
+            const rockButton=document.getElementById('rock');
+            rockButton.addEventListener('click', () => {
+                let compSelection=compPlay();
+                moves--;
+                if (compSelection=='rock') {
+                    document.getElementById("result").innerHTML='Draw!';
+                } else if (compSelection=='scissors') {
+                    document.getElementById("result").innerHTML='You win!';
+                    playerScore = ++playerScore;
+                } else {
+                    document.getElementById("result").innerHTML='You lose!';
+                    compScore = ++compScore;
+                }
+                document.getElementById("score").innerHTML=`${playerScore} : ${compScore}`;
+                document.getElementById("moves-left").innerHTML=`Moves left: ${moves}`;
+                endGame();
+            });
+
+            const paperButton=document.getElementById('paper');
+            paperButton.addEventListener('click', () => {
+                let compSelection=compPlay();
+                moves--;
+                if (compSelection=='paper') {
+                    document.getElementById("result").innerHTML='Draw!';
+                } else if (compSelection=='rock') {
+                    document.getElementById("result").innerHTML='You win!';
+                    playerScore = ++playerScore;
+                } else {
+                    document.getElementById("result").innerHTML='You lose!';
+                    compScore = ++compScore;
+                }
+                document.getElementById("score").innerHTML=`${playerScore} : ${compScore}`;
+                document.getElementById("moves-left").innerHTML=`Moves left: ${moves}`;
+                endGame();
+            });
+
+            const scissorsButton=document.getElementById('scissors');
+            scissorsButton.addEventListener('click', () => {
+                let compSelection=compPlay();
+                moves--;
+                if (compSelection=='scissors') {
+                    document.getElementById("result").innerHTML='Draw!';
+                } else if (compSelection=='paper') {
+                    document.getElementById("result").innerHTML='You win!';
+                    playerScore = ++playerScore;
+                } else {
+                    document.getElementById("result").innerHTML='You lose!';
+                    compScore = ++compScore;
+                }
+                document.getElementById("score").innerHTML=`${playerScore} : ${compScore}`;
+                document.getElementById("moves-left").innerHTML=`Moves left: ${moves}`;
+                endGame();
+            });
+                
+            function endGame() {
+                if (moves == 0 ) {
+                    if (playerScore == compScore ) {
+                        document.getElementById("final").innerHTML='Humans are no better than computers';
+                    } else if (playerScore>compScore) {
+                        document.getElementById("final").innerHTML='Computers are losers';
+                    } else if (compScore>playerScore) {
+                        document.getElementById("final").innerHTML='Humans are losers';
+                    }
+                    document.getElementById('rock').disabled=true;
+                    document.getElementById('scissors').disabled=true;
+                    document.getElementById('paper').disabled=true;
+                    restartGame();
+                }
             }
+
+            function restartGame() {
+                const restartBtn=document.createElement("button");
+                document.getElementById('restart').appendChild(restartBtn);
+                restartBtn.innerHTML='Restart';
+                    restartBtn.addEventListener('click', () => {
+                        window.location.reload();
+                    })
+            }
+            
+            
         </script>
     </body>
 </html>
